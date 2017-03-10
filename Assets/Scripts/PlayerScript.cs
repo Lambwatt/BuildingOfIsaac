@@ -5,10 +5,11 @@ public class PlayerScript : MonoBehaviour
 {
 
     public float speed;
-    public float lastShotTime;
+    
     public float rateOfFire;
     public GameObject playerWall;
 
+    private float lastShotTime = 0;
     private AudioSource audioSource;
 
     private float wallOffset = 0.75f;
@@ -54,7 +55,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (Time.time > lastShotTime + rateOfFire)
+            if (lastShotTime == 0 ||Time.time > lastShotTime + rateOfFire)
             {
                 Instantiate(playerWall, new Vector2(transform.position.x, transform.position.y + wallOffset), Quaternion.Euler(0, 0, 90));
                 lastShotTime = Time.time;
