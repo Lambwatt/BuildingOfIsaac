@@ -12,13 +12,13 @@ public class Enemy : MonoBehaviour {
 
 	State state = State.AttackPlayer;
 	Vector3 target;
-	float speed;
+	float speed = .25f;
 	int ticker;
 
 	// Use this for initialization
 	void Start () {
 		target = GameObject.FindGameObjectWithTag("Player").transform.position;
-		InvokeRepeating();
+		InvokeRepeating("SecondUpdate", 2f, 2f);
 	}
 	
 	// Update is called once per frame
@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour {
 		switch(state){
 		case State.AttackPlayer:
 			transform.position = Vector2.MoveTowards(transform.position, target, speed);
+			Debug.Log("ran at player");
 			break;
 		case State.Drift:
 			transform.Translate(target);
@@ -43,6 +44,7 @@ public class Enemy : MonoBehaviour {
 		case State.AttackPlayer:
 			//transform.position = Vector2.MoveTowards(transform.position, target.position, speed);
 			target = GameObject.FindGameObjectWithTag("Player").transform.position;
+			Debug.Log("Targeted player");
 			break;
 		case State.Drift:
 			ticker -= 1;
@@ -57,8 +59,8 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter2D(Collider2D other){
-		switch(other.tag){
+	void OnCollisionEnter2D(Collision2D other){
+		switch(other.gameObject.tag){
 		case "PlayerWall":
 		case "LevelWall":
 		case "EnemyWall":
