@@ -9,12 +9,14 @@ public class PlayerScript : MonoBehaviour
     public float rateOfFire;
     public GameObject playerWall;
 
+    private AudioSource audioSource;
+
     private float wallOffset = 0.75f;
 
     // Use this for initialization
     void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -50,13 +52,13 @@ public class PlayerScript : MonoBehaviour
 
     void handleBuild()
     {
-
         if (Input.GetKeyDown(KeyCode.W))
         {
             if (Time.time > lastShotTime + rateOfFire)
             {
                 Instantiate(playerWall, new Vector2(transform.position.x, transform.position.y + wallOffset), Quaternion.Euler(0, 0, 90));
                 lastShotTime = Time.time;
+                audioSource.Play();
             }
         }
         if (Input.GetKeyDown(KeyCode.S))
@@ -65,6 +67,7 @@ public class PlayerScript : MonoBehaviour
             {
                 Instantiate(playerWall, new Vector2(transform.position.x, transform.position.y - wallOffset), Quaternion.Euler(0, 0, 90));
                 lastShotTime = Time.time;
+                audioSource.Play();
             }
         }
         if (Input.GetKeyDown(KeyCode.A))
@@ -73,6 +76,7 @@ public class PlayerScript : MonoBehaviour
             {
                 Instantiate(playerWall, new Vector2(transform.position.x - wallOffset, transform.position.y), Quaternion.identity);
                 lastShotTime = Time.time;
+                audioSource.Play();
             }
         }
         if (Input.GetKeyDown(KeyCode.D))
@@ -81,6 +85,7 @@ public class PlayerScript : MonoBehaviour
             {
                 Instantiate(playerWall, new Vector2(transform.position.x + wallOffset, transform.position.y), Quaternion.identity);
                 lastShotTime = Time.time;
+                audioSource.Play();
             }
         }
     }
