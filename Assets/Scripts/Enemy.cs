@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour {
 		switch(other.gameObject.tag){
 		case "PlayerWall":
 			Instantiate(deathWall, transform.position, Quaternion.identity);
+			Destroy(gameObject);
 			break;
 		case "LevelWall":
 		case "EnemyWall":
