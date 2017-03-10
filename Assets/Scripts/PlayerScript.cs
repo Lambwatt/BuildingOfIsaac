@@ -1,23 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerScript : MonoBehaviour
+{
 
     public float speed;
+    public float lastShotTime;
+    public float rateOfFire;
     public GameObject playerWall;
 
     private float wallOffset = 0.75f;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         handleControls();
         handleBuild();
-	}
+    }
 
     void handleControls()
     {
@@ -45,22 +50,38 @@ public class PlayerScript : MonoBehaviour {
 
     void handleBuild()
     {
+
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Instantiate(playerWall, new Vector2(transform.position.x, transform.position.y + wallOffset), Quaternion.Euler(0, 0, 90));
+            if (Time.time > lastShotTime + rateOfFire)
+            {
+                Instantiate(playerWall, new Vector2(transform.position.x, transform.position.y + wallOffset), Quaternion.Euler(0, 0, 90));
+                lastShotTime = Time.time;
+            }
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Instantiate(playerWall, new Vector2(transform.position.x, transform.position.y - wallOffset), Quaternion.Euler(0, 0, 90));
+            if (Time.time > lastShotTime + rateOfFire)
+            {
+                Instantiate(playerWall, new Vector2(transform.position.x, transform.position.y - wallOffset), Quaternion.Euler(0, 0, 90));
+                lastShotTime = Time.time;
+            }
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Instantiate(playerWall, new Vector2(transform.position.x - wallOffset, transform.position.y), Quaternion.identity);
+            if (Time.time > lastShotTime + rateOfFire)
+            {
+                Instantiate(playerWall, new Vector2(transform.position.x - wallOffset, transform.position.y), Quaternion.identity);
+                lastShotTime = Time.time;
+            }
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Instantiate(playerWall, new Vector2(transform.position.x + wallOffset, transform.position.y), Quaternion.identity);
+            if (Time.time > lastShotTime + rateOfFire)
+            {
+                Instantiate(playerWall, new Vector2(transform.position.x + wallOffset, transform.position.y), Quaternion.identity);
+                lastShotTime = Time.time;
+            }
         }
     }
-    
 }
