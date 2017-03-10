@@ -10,9 +10,12 @@ public class Enemy : MonoBehaviour {
 		Drift
 	}
 
+	public GameObject deathWall;
+	public float speed = .25f;
+
 	State state = State.AttackPlayer;
 	Vector3 target;
-	float speed = .25f;
+
 	int ticker;
 
 	// Use this for initialization
@@ -27,7 +30,7 @@ public class Enemy : MonoBehaviour {
 		switch(state){
 		case State.AttackPlayer:
 			transform.position = Vector2.MoveTowards(transform.position, target, speed);
-			Debug.Log("ran at player");
+			//Debug.Log("ran at player");
 			break;
 		case State.Drift:
 			transform.Translate(target);
@@ -44,7 +47,7 @@ public class Enemy : MonoBehaviour {
 		case State.AttackPlayer:
 			//transform.position = Vector2.MoveTowards(transform.position, target.position, speed);
 			target = GameObject.FindGameObjectWithTag("Player").transform.position;
-			Debug.Log("Targeted player");
+			//Debug.Log("Targeted player");
 			break;
 		case State.Drift:
 			ticker -= 1;
@@ -59,11 +62,20 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
+	void bounce(Transform thing){
+		Debug.Log("Hey bounce!!!");
+	}
+
+
 	void OnCollisionEnter2D(Collision2D other){
 		switch(other.gameObject.tag){
 		case "PlayerWall":
+			Instantiate(deathWall, transform.position, Quaternion.identity);
+			break;
 		case "LevelWall":
 		case "EnemyWall":
+			bounce(other.transform);
+			break;
 		default:
 			break;
 		}
